@@ -137,6 +137,9 @@
 <body>
     <div class="banner">
         <span>Handi web</span>
+        <a href="home.html" id="home-btn" style="position:absolute;left:32px;top:18px;background:#fff2;color:#fff;border-radius:6px;padding:4px 14px;text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;transition:background 0.2s, color 0.2s;font-size:1em;">
+            <i class="fas fa-home"></i> Accueil
+        </a>
         <div id="account-bar" style="position:absolute;top:18px;right:32px;display:flex;align-items:center;gap:10px;">
             <a href="#" id="account-link" style="background:#fff2;color:#fff;border-radius:6px;padding:4px 12px;text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;transition:background 0.2s, color 0.2s;">
               <i class="fas fa-user-circle"></i> <span id="account-name">Compte</span>
@@ -302,41 +305,6 @@
       // Panneau compte toggle
       const accountBtn = document.getElementById('account-link-forum');
       const panel = document.getElementById('account-panel-forum');
-      accountBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
-      });
-      // Fermer le panneau si clic en dehors
-      document.addEventListener('mousedown', function(e) {
-        if (!panel.contains(e.target) && !accountBtn.contains(e.target)) {
-          panel.style.display = 'none';
-        }
-      });
-    });
-    // Gestion du panneau compte dans la bannière
-    document.addEventListener('DOMContentLoaded', function() {
-      var user = localStorage.getItem('user');
-      if(user) {
-        document.getElementById('account-name').textContent = user;
-        document.getElementById('account-panel-username').textContent = user;
-        document.getElementById('logout-index').innerHTML = '<i class="fas fa-sign-out-alt"></i> Déconnexion';
-        document.getElementById('logout-index').style.background = 'linear-gradient(90deg,#e57373 60%,#c0392b 100%)';
-        document.getElementById('logout-index').onclick = function() {
-          localStorage.removeItem('user');
-          location.reload();
-        };
-      } else {
-        document.getElementById('account-name').textContent = 'Compte';
-        document.getElementById('account-panel-username').textContent = 'Non connecté';
-        document.getElementById('logout-index').innerHTML = '<i class="fas fa-sign-in-alt"></i> Se connecter';
-        document.getElementById('logout-index').style.background = 'linear-gradient(90deg,#3498db 60%,#1976d2 100%)';
-        document.getElementById('logout-index').onclick = function() {
-          window.location.href = 'connexion.html';
-        };
-      }
-      // Panneau compte toggle
-      const accountBtn = document.getElementById('account-link');
-      const panel = document.getElementById('account-panel');
       accountBtn.addEventListener('click', function(e) {
         e.preventDefault();
         panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
