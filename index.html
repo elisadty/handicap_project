@@ -15,6 +15,31 @@
         .astuce:last-child { border-bottom: none; }
         .astuce img { max-width: 90px; max-height: 90px; border-radius: 8px; box-shadow: 0 2px 8px #8e44ad22; }
         .user { font-weight: bold; color: #8e44ad; }
+        #account-bar {
+            position: absolute;
+            top: 18px;
+            right: 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+        }
+        #account-link {
+            background: #fff2;
+            color: #fff;
+            border-radius: 6px;
+            padding: 4px 12px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        #account-link:hover {
+            background: #fff4;
+            color: #ffe;
+        }
         .logout {
             background: linear-gradient(90deg, #e57373 60%, #c0392b 100%);
             color: #fff;
@@ -85,7 +110,7 @@
         button[type="submit"]:hover {
             background: linear-gradient(90deg, #6c3483 60%, #8e44ad 100%);
         }
-        a[href="astuces.html"] {
+        a[href="page_forum.html"] {
             display: inline-block;
             margin-bottom: 16px;
             color: #8e44ad;
@@ -93,7 +118,7 @@
             font-weight: 500;
             transition: color 0.2s;
         }
-        a[href="astuces.html"]:hover {
+        a[href="page_forum.html"]:hover {
             color: #6c3483;
             text-decoration: underline;
         }
@@ -112,13 +137,16 @@
 <body>
     <div class="banner">
         <span>Handi web</span>
+        <div id="account-bar" class="hidden">
+            <a href="#" id="account-link"><i class="fas fa-user-circle"></i> Compte</a>
+            <button class="logout" onclick="logout()" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
         <div id="logout-container"></div>
     </div>
     <div class="container">
         <h1>Poster une astuce</h1>
         <div id="user-info" class="hidden">
             Connecté en tant que <span id="username"></span>
-            <button class="logout" onclick="logout()" title="Déconnexion"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
         </div>
         <form id="login-form">
             <label>Nom d'utilisateur :</label>
@@ -135,7 +163,7 @@
             <button type="submit">Poster</button>
         </form>
         <h2>Astuces postées</h2>
-        <a href="astuces.html" style="display:inline-block;margin-bottom:16px;color:#8e44ad;text-decoration:none;">Voir toutes les astuces &rarr;</a>
+        <a href="page_forum.html" style="display:inline-block;margin-bottom:16px;color:#8e44ad;text-decoration:none;">Voir toutes les astuces &rarr;</a>
         <div id="astuces-list"></div>
     </div>
     <script>
@@ -161,17 +189,18 @@
             document.getElementById('login-form').classList.remove('hidden');
             document.getElementById('post-form').classList.add('hidden');
             document.getElementById('user-info').classList.add('hidden');
+            document.getElementById('account-bar').classList.add('hidden');
+            document.getElementById('logout-container').style.display = '';
         }
         function showPostForm(user) {
             document.getElementById('login-form').classList.add('hidden');
             document.getElementById('post-form').classList.remove('hidden');
             document.getElementById('user-info').classList.remove('hidden');
             document.getElementById('username').textContent = user;
-            // Déplacer le bouton de déconnexion dans la bannière
-            const logoutBtn = document.querySelector('.logout');
-            if (logoutBtn) {
-                document.getElementById('logout-container').appendChild(logoutBtn);
-            }
+            // Affiche la rubrique compte + bouton déconnexion dans la bannière
+            document.getElementById('account-bar').classList.remove('hidden');
+            document.getElementById('account-link').innerHTML = `<i class='fas fa-user-circle'></i> ${user}`;
+            document.getElementById('logout-container').style.display = 'none';
         }
         // Gestion des astuces
         function getAstuces() {

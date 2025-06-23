@@ -257,6 +257,38 @@ header h1 {
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('posts');
 
+      // ----------- Affichage dynamique des astuces du localStorage -----------
+      function getAstuces() {
+        return JSON.parse(localStorage.getItem('astuces') || '[]');
+      }
+      function renderAstuces() {
+        // Supprime les anciennes cartes dynamiques
+        container.querySelectorAll('.card[data-dynamic="1"]').forEach(e => e.remove());
+        const astuces = getAstuces();
+        astuces.forEach(astuce => {
+          const section = document.createElement('section');
+          section.className = 'card';
+          section.setAttribute('data-dynamic', '1');
+          section.setAttribute('data-validations', '0');
+          section.innerHTML = `
+            <div class="user">
+              <img src="https://i.pravatar.cc/80?u=${encodeURIComponent(astuce.user)}" class="avatar" alt="Avatar de ${astuce.user}">
+              <span class="pseudo">${astuce.user}</span>
+            </div>
+            <h3>Astuce partagée</h3>
+            <p class="content">${astuce.text.replace(/</g, '&lt;')}</p>
+            ${astuce.photo ? `<figure><img src="${astuce.photo}" alt="Photo de l'astuce"></figure>` : ''}
+            <div class="actions">
+              <button class="btn-validate">Astuce testée et validée <span class="count">0</span></button>
+              <button class="btn-report">Signaler</button>
+            </div>
+            <button class="btn-more">Plus</button>
+          `;
+          container.appendChild(section);
+        });
+      }
+      renderAstuces();
+
       /* ----------- Limiteur de texte & bouton “Plus” ----------- */
       container.querySelectorAll('.card').forEach(card => {
         const content = card.querySelector('.content');
@@ -304,7 +336,7 @@ document.getElementById('search').addEventListener('input', e => {
 });
 
   </script>
-  <button class="btn-post">＋ Poster une astuce</button>
+  <button class="btn-post" onclick="window.location.href='index.html'">＋ Poster une astuce</button>
 
 </body>
 </html>
