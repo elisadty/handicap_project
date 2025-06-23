@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - Handi web</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(120deg, #e9e4f0 0%, #f4f4f4 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: #fff;
+      padding: 36px 32px 28px 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #8e44ad22;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .login-container h1 {
+      color: #8e44ad;
+      margin-bottom: 18px;
+      font-size: 2em;
+    }
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    label {
+      color: #6c3483;
+      font-weight: 500;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #d1b3e0;
+      border-radius: 6px;
+      font-size: 1em;
+      background: #f4f0fa;
+      transition: border 0.2s;
+    }
+    input[type="text"]:focus, input[type="password"]:focus {
+      border: 1.5px solid #8e44ad;
+      outline: none;
+    }
+    button[type="submit"] {
+      background: linear-gradient(90deg, #8e44ad 60%, #6c3483 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #8e44ad22;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #6c3483 60%, #8e44ad 100%);
+    }
+    .error-message {
+      color: #c0392b;
+      background: #fdecea;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      font-size: 0.98em;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Connexion</h1>
+    <form id="login-form">
+      <label for="username">Nom d'utilisateur :</label>
+      <input type="text" id="username" required autocomplete="username">
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" required autocomplete="current-password">
+      <div class="error-message" id="error-message"></div>
+      <button type="submit">Se connecter</button>
+    </form>
+  </div>
+  <script>
+    function setUser(name) {
+      localStorage.setItem('user', name);
+    }
+    function setPassword(name, password) {
+      localStorage.setItem('password_' + name, password);
+    }
+    function checkPassword(name, password) {
+      return localStorage.getItem('password_' + name) === password;
+    }
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('error-message');
+      if (!username || !password) return;
+      if (localStorage.getItem('password_' + username)) {
+        // Utilisateur déjà enregistré, vérification du mot de passe
+        if (checkPassword(username, password)) {
+          setUser(username);
+          window.location.href = 'page_forum.html';
+        } else {
+          errorDiv.textContent = 'Mot de passe incorrect.';
+          errorDiv.style.display = 'block';
+        }
+      } else {
+        // Nouvel utilisateur, enregistrement du mot de passe
+        setPassword(username, password);
+        setUser(username);
+        window.location.href = 'page_forum.html';
+      }
+    });
+  </script>
+</body>
+</html>

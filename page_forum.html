@@ -181,16 +181,16 @@ header h1 {
 
 <body>
   <header>
-    <div class="header-content" style="position:relative;">
-      <h1>Astuces d’aidants — Maladie de Parkinson</h1>
-      <div style="display:flex;align-items:center;gap:16px;justify-content:center;">
-        <input type="search" id="search" placeholder="Rechercher une astuce…" />
+  <div class="header-content">
+    <h1>Astuces d’aidants — Maladie de Parkinson</h1>
+    <input type="search" id="search" placeholder="Rechercher une astuce…" />
+    <div id="account-bar-forum" style="position:absolute;top:1.2rem;right:2.5rem;display:flex;align-items:center;gap:10px;">
         <a href="#" id="account-link-forum" style="background:#fff2;color:#fff;border-radius:6px;padding:4px 12px;text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;transition:background 0.2s, color 0.2s;">
           <i class="fas fa-user-circle"></i> <span id="account-name-forum">Compte</span>
         </a>
       </div>
-    </div>
-  </header>
+  </div>
+</header>
 
 
   <main id="posts">
@@ -201,7 +201,9 @@ header h1 {
         <span class="pseudo">Marie</span>
       </div>
 
-      <h3>Faciliter l’habillage <span class="badge">Certifiée par un médecin</span></h3>
+      <h3 style="position:relative;">Faciliter l’habillage <span class="badge">Certifiée par un médecin</span>
+        <img src="certif.png" alt="Certifié" style="position:absolute;top:-18px;right:142px;height:40px;width:auto;vertical-align:top;box-shadow:none;background:none;border:none;">
+      </h3>
 
       <p class="content">Les vêtements à fermetures aimantées réduisent le temps et l’effort nécessaires pour s’habiller, tout en préservant l’autonomie ; j’ai également remarqué que les chemises aimantées se lavent très bien en machine sans perdre leur pouvoir d’adhérence, ce qui simplifie l’entretien à long terme pour les aidants.</p>
 
