@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forum — Astuces Aidants Parkinson</title>
+
+  <!-- Police -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Palette violette */
+    :root{
+      --primary:#7E57C2;          /* violet principal */
+      --primary-dark:#6742B5;
+      --secondary:#F5F0FF;        /* fond très clair */
+      --danger:#E53935;           /* rouge pour “Signaler” */
+      --certified:#512DA8;        /* badge “Certifiée” */
+      --radius:1rem;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      background:var(--secondary);
+      font-family:'Inter',sans-serif;
+      color:#333;
+      line-height:1.5;
+    }
+
+    header{
+      background:var(--primary);
+      color:#fff;
+      padding:1rem 2rem;
+      text-align:center;
+      font-weight:600;
+    }
+
+    main{
+      padding:2rem 1rem;
+      display:grid;
+      gap:1.5rem;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    }
+
+    /* Carte / Post */
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,.08);
+      display:flex;
+      flex-direction:column;
+      padding:1.5rem;
+      position:relative;
+    }
+
+    /* Entête profil */
+    .user{
+      display:flex;
+      align-items:center;
+      margin-bottom:.75rem;
+      gap:.6rem;
+    }
+    .avatar{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+    .pseudo{font-weight:600;}
+
+    /* Titre & badge */
+    .card h3{font-size:1.15rem;margin:.25rem 0 .5rem;}
+    .badge{
+      background:var(--certified);
+      color:#fff;
+      border-radius:999px;
+      font-size:.7rem;
+      padding:.2rem .55rem;
+      margin-left:.5rem;
+    }
+
+    /* Contenu collapsible */
+    .content{
+      margin-bottom:1rem;
+      overflow:hidden;
+    }
+    .collapsed .content{
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+    }
+
+    /* Média (image / vidéo) */
+    figure{margin:0 0 1rem;max-height:220px;overflow:hidden;border-radius:.75rem;}
+    figure img,figure video{width:100%;display:block;}
+
+    /* Actions */
+    .actions{
+      display:flex;
+      gap:.5rem;
+      margin-top:auto;
+    }
+    button{
+      cursor:pointer;
+      border:none;
+      border-radius:.55rem;
+      font-size:.85rem;
+      padding:.55rem .8rem;
+      color:#fff;
+      transition:background .2s;
+    }
+    .btn-validate{background:var(--primary);}
+    .btn-validate:hover{background:var(--primary-dark);}
+    .btn-report{background:var(--danger);}
+    .btn-report:hover{background:#c62828;}
+
+    /* Compteur de validations dans le bouton */
+    .btn-validate .count{font-weight:700;margin-left:.35rem;}
+
+    /* Bouton “Plus” */
+    .btn-more{
+      position:absolute;
+      right:1.2rem;
+      bottom:4.2rem; /* juste au-dessus des actions */
+      background:rgba(0,0,0,.6);
+      font-size:.75rem;
+      padding:.25rem .6rem;
+      border-radius:.5rem;
+      display:none;
+    }
+    .card.collapsed .btn-more{display:block;}
+	.btn-post {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background 0.2s;
+}
+.btn-post:hover {
+  background: var(--primary-dark);
+}
+header {
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+#search {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  min-width: 220px;
+}
+
+  </style>
+</head>
+
+<body>
+  <header>
+  <div class="header-content">
+    <h1>Astuces d’aidants — Maladie de Parkinson</h1>
+    <input type="search" id="search" placeholder="Rechercher une astuce…" />
+  </div>
+</header>
+
+
+  <main id="posts">
+    <!-- EXEMPLE 1 -->
+    <section class="card collapsed" data-validations="12">
+      <div class="user">
+        <img src="https://i.pravatar.cc/80?img=12" class="avatar" alt="Avatar de Marie">
+        <span class="pseudo">Marie</span>
+      </div>
+
+      <h3>Faciliter l’habillage <span class="badge">Certifiée par un médecin</span></h3>
+
+      <p class="content">Les vêtements à fermetures aimantées réduisent le temps et l’effort nécessaires pour s’habiller, tout en préservant l’autonomie ; j’ai également remarqué que les chemises aimantées se lavent très bien en machine sans perdre leur pouvoir d’adhérence, ce qui simplifie l’entretien à long terme pour les aidants.</p>
+
+      <figure>
+        <img src="https://source.unsplash.com/featured/400x220?clothes" alt="Exemple de chemise aimantée">
+      </figure>
+
+      <div class="actions">
+        <button class="btn-validate">Astuce testée et validée <span class="count">12</span></button>
+        <button class="btn-report">Signaler</button>
+      </div>
+      <button class="btn-more">Plus</button>
+    </section>
+
+    <!-- EXEMPLE 2 -->
+    <section class="card" data-validations="8">
+      <div class="user">
+        <img src="https://i.pravatar.cc/80?img=32" class="avatar" alt="Avatar de Lucas">
+        <span class="pseudo">Lucas</span>
+      </div>
+
+      <h3>Stabiliser le tremblement lors des repas</h3>
+
+      <p class="content">Placez une bande antidérapante sous l’assiette et utilisez des couverts un peu plus lourds ; l’inertie supplémentaire réduit les tremblements.</p>
+
+      <figure>
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls poster="https://source.unsplash.com/featured/400x220?meal">
+          Votre navigateur ne supporte pas la vidéo.
+        </video>
+      </figure>
+
+      <div class="actions">
+        <button class="btn-validate">Astuce testée et validée <span class="count">8</span></button>
+        <button class="btn-report">Signaler</button>
+      </div>
+    </section>
+
+    <!-- EXEMPLE 3 -->
+    <section class="card collapsed" data-validations="2">
+      <div class="user">
+        <img src="https://i.pravatar.cc/80?img=45" class="avatar" alt="Avatar de Sophie">
+        <span class="pseudo">Sophie</span>
+      </div>
+
+      <h3>Appli de rappels de médication</h3>
+
+      <p class="content">L’application <em>Medisafe</em> envoie des rappels personnalisés et suit l’adhésion au traitement, ce qui permet de mieux comprendre la façon dont les prises se répartissent sur la journée et d’identifier des oublis récurrents…</p>
+
+      <div class="actions">
+        <button class="btn-validate">Astuce testée et validée <span class="count">2</span></button>
+        <button class="btn-report">Signaler</button>
+      </div>
+      <button class="btn-more">Plus</button>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('posts');
+
+      /* ----------- Limiteur de texte & bouton “Plus” ----------- */
+      container.querySelectorAll('.card').forEach(card => {
+        const content = card.querySelector('.content');
+        const btnMore  = card.querySelector('.btn-more');
+
+        // Si la hauteur dépasse ~3 lignes (~75px), bouton visible
+        if(content.scrollHeight > 75){
+          card.classList.add('collapsed');
+          btnMore?.addEventListener('click', () => {
+            card.classList.toggle('collapsed');
+            btnMore.textContent = card.classList.contains('collapsed') ? 'Plus' : 'Moins';
+          });
+        }
+      });
+
+      /* ----------- Bouton “testée & validée” ----------- */
+      container.addEventListener('click', e => {
+        const btn = e.target.closest('.btn-validate');
+        if(!btn) return;
+
+        const card = btn.closest('.card');
+        const countSpan = btn.querySelector('.count');
+        let count = Number(countSpan.textContent) + 1;
+        countSpan.textContent = count;
+        card.dataset.validations = count;
+
+        sortPosts(); // ré-ordonne après chaque vote
+      });
+
+      /* ----------- Tri au chargement puis après chaque vote ----------- */
+      function sortPosts(){
+        const cards = Array.from(container.children);
+        cards.sort((a,b) => b.dataset.validations - a.dataset.validations);
+        cards.forEach(c => container.appendChild(c)); // ré-injecte dans l’ordre
+      }
+      sortPosts();
+    });
+	// Barre de recherche dynamique
+document.getElementById('search').addEventListener('input', e => {
+  const keyword = e.target.value.toLowerCase();
+  document.querySelectorAll('#posts .card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(keyword) ? 'flex' : 'none';
+  });
+});
+
+  </script>
+  <button class="btn-post">＋ Poster une astuce</button>
+
+</body>
+</html>
