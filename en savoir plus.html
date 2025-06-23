@@ -21,14 +21,30 @@
       <p>À ce jour, il n’existe pas de traitement curatif...</p>
     </div>
 
+    
+       <!-- Bouton et section des symptômes restent inchangés -->
     <button
       onclick="toggleSymptomes()"
-      aria-expanded="false"
-      aria-controls="symptomes"
       class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 transition"
     >
       Symptômes
     </button>
+
+    <div id="symptomes" class="mt-6 hidden space-y-4">
+      <h2 class="text-xl font-semibold text-purple-600">Symptômes principaux :</h2>
+
+      <ul class="list-disc pl-6 text-gray-800 space-y-2">
+        <li><span class="font-bold">Tremblements :</span> Mouvements involontaires, souvent des mains ou des doigts, surtout au repos.</li>
+        <li><span class="font-bold">Rigidité musculaire :</span> Raideur dans les bras, les jambes ou le tronc, qui peut limiter les mouvements.</li>
+        <li><span class="font-bold">Bradykinésie :</span> Lenteur dans les mouvements, rendant les gestes du quotidien plus difficiles.</li>
+        <li><span class="font-bold">Troubles de l'équilibre :</span> Difficultés à marcher ou à maintenir une posture stable.</li>
+        <li><span class="font-bold">Troubles de la parole :</span> Voix monotone, faible ou hésitante.</li>
+        <li><span class="font-bold">Modification de l’écriture :</span> L’écriture devient plus petite et difficile à lire (micrographie).</li>
+      </ul>
+    </div>
+  </div>
+
+     
 
     <div id="symptomes" class="mt-6 hidden space-y-4 transition-all duration-300 ease-in-out">
       <h2 class="text-xl font-semibold text-purple-600">Symptômes principaux :</h2>
@@ -168,6 +184,32 @@
     </svg>
   </div>
 </a>
+<!-- ... ton code précédent ... -->
+
+<!-- SECTION SYMPTOMES UNIQUE -->
+<div id="symptomes" class="mt-6 hidden space-y-4 transition-all duration-300 ease-in-out">
+  <h2 class="text-xl font-semibold text-purple-600">Symptômes principaux :</h2>
+  <ul class="list-disc pl-6 text-gray-800 space-y-2">
+    <li><span class="font-bold">Tremblements :</span> Mouvements involontaires, souvent des mains ou des doigts, surtout au repos.</li>
+    <li><span class="font-bold">Rigidité musculaire :</span> Raideur dans les bras, les jambes ou le tronc, qui peut limiter les mouvements.</li>
+    <li><span class="font-bold">Bradykinésie :</span> Lenteur dans les mouvements, rendant les gestes du quotidien plus difficiles.</li>
+    <li><span class="font-bold">Troubles de l'équilibre :</span> Difficultés à marcher ou à maintenir une posture stable.</li>
+    <li><span class="font-bold">Troubles de la parole :</span> Voix monotone, faible ou hésitante.</li>
+    <li><span class="font-bold">Modification de l’écriture :</span> L’écriture devient plus petite et difficile à lire (micrographie).</li>
+  </ul>
+</div>
+
+<!-- SCRIPT POUR LE BOUTON -->
+<script>
+  function toggleSymptomes() {
+    const section = document.getElementById("symptomes");
+    section.classList.toggle("hidden");
+  }
+</script>
+
+</body>
+</html>
+
 
 
 
