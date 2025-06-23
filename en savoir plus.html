@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maladie de Parkinson</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6 space-y-10">
+
+  <!-- Contenu principal -->
+  <div class="bg-white max-w-4xl w-full p-6 rounded-lg shadow-lg border border-purple-600">
+    <h1 class="text-3xl font-bold text-purple-700 mb-4">La Maladie de Parkinson</h1>
+
+    <div class="text-gray-700 space-y-4 mb-6">
+      <p>La maladie de Parkinson est une pathologie neurodégénérative chronique et progressive qui affecte principalement le système nerveux central, en particulier les zones du cerveau responsables du contrôle des mouvements.</p>
+      <p>Elle est causée par la dégénérescence des neurones dopaminergiques situés dans la substance noire (substantia nigra)...</p>
+      <p>À mesure que les neurones dopaminergiques disparaissent, la quantité de dopamine disponible diminue, provoquant des troubles moteurs caractéristiques...</p>
+      <p>Mais la maladie de Parkinson ne se limite pas à ces symptômes moteurs. Elle peut aussi entraîner des troubles cognitifs...</p>
+      <p>La cause exacte de cette dégénérescence neuronale reste inconnue...</p>
+      <p>À ce jour, il n’existe pas de traitement curatif...</p>
+    </div>
+
+    <button
+      onclick="toggleSymptomes()"
+      aria-expanded="false"
+      aria-controls="symptomes"
+      class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 transition"
+    >
+      Symptômes
+    </button>
+
+    <div id="symptomes" class="mt-6 hidden space-y-4 transition-all duration-300 ease-in-out">
+      <h2 class="text-xl font-semibold text-purple-600">Symptômes principaux :</h2>
+      <ul class="list-disc pl-6 text-gray-800 space-y-2">
+        <li><span class="font-bold">Tremblements :</span> Mouvements involontaires, souvent des mains ou des doigts.</li>
+        <li><span class="font-bold">Rigidité musculaire :</span> Raideur dans les bras, les jambes ou le tronc.</li>
+        <li><span class="font-bold">Bradykinésie :</span> Lenteur dans les mouvements.</li>
+        <li><span class="font-bold">Troubles de l'équilibre :</span> Difficultés à marcher.</li>
+        <li><span class="font-bold">Troubles de la parole :</span> Voix monotone ou faible.</li>
+        <li><span class="font-bold">Modification de l’écriture :</span> Micrographie.</li>
+      </ul>
+    </div>
+  </div>
+
+<style>
+  .horizontal-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+  }
+
+  .horizontal-scroll-container::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .horizontal-scroll-container::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+  }
+
+  .card {
+    min-width: 320px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+.forum-card {
+  background: var(--primary);
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  flex-direction: row;
+  padding: 2rem;
+}
+
+.forum-card:hover {
+  background: var(--primary-dark, #004080);
+}
+
+.forum-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.arrow-icon {
+  animation: bounceRight 1.4s infinite ease-in-out;
+}
+
+@keyframes bounceRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+</style>
+
+<main>
+  <div class="horizontal-scroll-container">
+    
+    <!-- ASTUCE 1 -->
+    <section class="card collapsed" data-validations="12">
+      <div class="user">
+        <img src="https://i.pravatar.cc/80?img=12" class="avatar" alt="Avatar de Marie">
+        <span class="pseudo">Marie</span>
+      </div>
+      <h3>Faciliter l’habillage <span class="badge">Certifiée par un médecin</span></h3>
+      <p class="content">Les vêtements à fermetures aimantées réduisent le temps et l’effort nécessaires pour s’habiller...</p>
+      <figure>
+        <img src="https://source.unsplash.com/featured/400x220?clothes" alt="Exemple de chemise aimantée">
+      </figure>
+      <div class="actions">
+        <button class="btn-validate">Astuce testée et validée <span class="count">12</span></button>
+        <button class="btn-report">Signaler</button>
+      </div>
+      <button class="btn-more">Plus</button>
+    </section>
+
+    <!-- ASTUCE 2 -->
+    <section class="card" data-validations="8">
+      <div class="user">
+        <img src="https://i.pravatar.cc/80?img=32" class="avatar" alt="Avatar de Lucas">
+        <span class="pseudo">Lucas</span>
+      </div>
+      <h3>Stabiliser le tremblement lors des repas</h3>
+      <p class="content">Placez une bande antidérapante sous l’assiette et utilisez des couverts un peu plus lourds...</p>
+      <figure>
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls poster="https://source.unsplash.com/featured/400x220?meal">
+          Votre navigateur ne supporte pas la vidéo.
+        </video>
+      </figure>
+      <div class="actions">
+        <button class="btn-validate">Astuce testée et validée <span class="count">8</span></button>
+        <button class="btn-report">Signaler</button>
+      </div>
+    </section>
+
+    <!-- ASTUCE 3 -->
+    <section class="card collapsed" data-validations="2">
+      <div class="user">
+        <img src="https://i.pravatar.cc/80?img=45" class="avatar" alt="Avatar de Sophie">
+        <span class="pseudo">Sophie</span>
+      </div>
+      <h3>Appli de rappels de médication</h3>
+      <p class="content">L’application <em>Medisafe</em> envoie des rappels personnalisés et suit l’adhésion au traitement...</p>
+      <div class="actions">
+        <button class="btn-validate">Astuce testée et validée <span class="count">2</span></button>
+        <button class="btn-report">Signaler</button>
+      </div>
+      <button class="btn-more">Plus</button>
+    </section>
+
+  </div>
+</main>
+
+<!-- CARTE FLÈCHE VERS FORUM -->
+<a href="/forum.html" class="carousel-card forum-card">
+  <div class="forum-content">
+    <span>Voir plus d’astuces<br>sur le forum</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="arrow-icon" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793L9.146 4.354a.5.5 0 1 1 .708-.708l4.5 4.5a.5.5 0 0 1 0 .708l-4.5 4.5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+    </svg>
+  </div>
+</a>
+
+
+
+
+</body>
+</html>
+
