@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster une astuce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(120deg, #e9e4f0 0%, #f4f4f4 100%); margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 32px 28px 28px 28px; border-radius: 16px; box-shadow: 0 4px 24px #8e44ad22; }
+        h1 { text-align: center; color: #6c3483; margin-bottom: 18px; }
+        h2 { color: #8e44ad; margin-top: 36px; }
+        .hidden { display: none; }
+        .astuce { border-bottom: 1px solid #eee; padding: 16px 0; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 18px; }
+        .astuce:last-child { border-bottom: none; }
+        .astuce img { max-width: 90px; max-height: 90px; border-radius: 8px; box-shadow: 0 2px 8px #8e44ad22; }
+        .user { font-weight: bold; color: #8e44ad; }
+        .logout {
+            background: linear-gradient(90deg, #e57373 60%, #c0392b 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.95em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px #c0392b22;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logout:hover {
+            background: linear-gradient(90deg, #c0392b 60%, #e57373 100%);
+        }
+        .banner {
+            width: 100vw;
+            background: linear-gradient(90deg, #8e44ad 60%, #6c3483 100%);
+            color: #fff;
+            font-size: 2em;
+            font-weight: bold;
+            padding: 24px 0 18px 0;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px #0002;
+            position: relative;
+        }
+        #logout-container {
+            position: absolute;
+            top: 18px;
+            right: 32px;
+        }
+        form { margin: 0 auto 24px auto; max-width: 420px; background: #f8f6fa; padding: 18px 20px 14px 20px; border-radius: 10px; box-shadow: 0 2px 8px #8e44ad11; }
+        label { color: #6c3483; font-weight: 500; }
+        input[type="text"], input[type="password"], textarea {
+            width: 100%;
+            padding: 8px 10px;
+            margin: 8px 0 14px 0;
+            border: 1px solid #d1b3e0;
+            border-radius: 6px;
+            font-size: 1em;
+            background: #f4f0fa;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+            border: 1.5px solid #8e44ad;
+            outline: none;
+        }
+        input[type="file"] {
+            margin-top: 6px;
+        }
+        button[type="submit"] {
+            background: linear-gradient(90deg, #8e44ad 60%, #6c3483 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 22px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px #8e44ad22;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #6c3483 60%, #8e44ad 100%);
+        }
+        a[href="astuces.html"] {
+            display: inline-block;
+            margin-bottom: 16px;
+            color: #8e44ad;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        a[href="astuces.html"]:hover {
+            color: #6c3483;
+            text-decoration: underline;
+        }
+        #user-info {
+            margin-bottom: 18px;
+            background: #ede7f6;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 1.08em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <span>Handi web</span>
+        <div id="logout-container"></div>
+    </div>
+    <div class="container">
+        <h1>Poster une astuce</h1>
+        <div id="user-info" class="hidden">
+            Connecté en tant que <span id="username"></span>
+            <button class="logout" onclick="logout()" title="Déconnexion"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+        </div>
+        <form id="login-form">
+            <label>Nom d'utilisateur :</label>
+            <input type="text" id="login-username" required>
+            <label>Mot de passe :</label>
+            <input type="password" id="login-password" required>
+            <button type="submit">Se connecter</button>
+        </form>
+        <form id="post-form" class="hidden">
+            <label>Votre astuce :</label><br>
+            <textarea id="astuce-text" rows="3" required></textarea><br>
+            <label>Photo (optionnel) :</label>
+            <input type="file" id="astuce-photo" accept="image/*"><br><br>
+            <button type="submit">Poster</button>
+        </form>
+        <h2>Astuces postées</h2>
+        <a href="astuces.html" style="display:inline-block;margin-bottom:16px;color:#8e44ad;text-decoration:none;">Voir toutes les astuces &rarr;</a>
+        <div id="astuces-list"></div>
+    </div>
+    <script>
+        // Gestion de la connexion
+        function getUser() {
+            return localStorage.getItem('user');
+        }
+        function setUser(name) {
+            localStorage.setItem('user', name);
+        }
+        function setPassword(name, password) {
+            // Stocke le mot de passe associé à l'utilisateur (simple, non sécurisé)
+            localStorage.setItem('password_' + name, password);
+        }
+        function checkPassword(name, password) {
+            return localStorage.getItem('password_' + name) === password;
+        }
+        function logout() {
+            localStorage.removeItem('user');
+            location.reload();
+        }
+        function showLogin() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('post-form').classList.add('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+        }
+        function showPostForm(user) {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('post-form').classList.remove('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('username').textContent = user;
+            // Déplacer le bouton de déconnexion dans la bannière
+            const logoutBtn = document.querySelector('.logout');
+            if (logoutBtn) {
+                document.getElementById('logout-container').appendChild(logoutBtn);
+            }
+        }
+        // Gestion des astuces
+        function getAstuces() {
+            return JSON.parse(localStorage.getItem('astuces') || '[]');
+        }
+        function saveAstuce(astuce) {
+            const astuces = getAstuces();
+            astuces.unshift(astuce);
+            localStorage.setItem('astuces', JSON.stringify(astuces));
+        }
+        function renderAstuces() {
+            const astuces = getAstuces();
+            const list = document.getElementById('astuces-list');
+            list.innerHTML = '';
+            astuces.forEach(a => {
+                const div = document.createElement('div');
+                div.className = 'astuce';
+                div.innerHTML = `<span class="user">${a.user}</span> : ${a.text}`;
+                if (a.photo) {
+                    const img = document.createElement('img');
+                    img.src = a.photo;
+                    div.appendChild(img);
+                }
+                list.appendChild(div);
+            });
+        }
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getUser();
+            if (user) {
+                showPostForm(user);
+            } else {
+                showLogin();
+            }
+            renderAstuces();
+        });
+        // Formulaire de connexion
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            if (!username || !password) return;
+            if (localStorage.getItem('password_' + username)) {
+                // Utilisateur déjà enregistré, vérification du mot de passe
+                if (checkPassword(username, password)) {
+                    setUser(username);
+                    showPostForm(username);
+                } else {
+                    alert('Mot de passe incorrect.');
+                }
+            } else {
+                // Nouvel utilisateur, enregistrement du mot de passe
+                setPassword(username, password);
+                setUser(username);
+                showPostForm(username);
+            }
+        });
+        // Formulaire de post
+        document.getElementById('post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const text = document.getElementById('astuce-text').value.trim();
+            const user = getUser();
+            const fileInput = document.getElementById('astuce-photo');
+            const submitBtn = document.querySelector('#post-form button[type="submit"]');
+            if (!text) return;
+            submitBtn.disabled = true;
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    saveAstuce({ user, text, photo: evt.target.result });
+                    renderAstuces();
+                    document.getElementById('astuce-text').value = '';
+                    fileInput.value = '';
+                    submitBtn.disabled = false;
+                };
+                reader.onerror = function() {
+                    alert('Erreur lors du chargement de la photo.');
+                    submitBtn.disabled = false;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveAstuce({ user, text, photo: null });
+                renderAstuces();
+                document.getElementById('astuce-text').value = '';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
