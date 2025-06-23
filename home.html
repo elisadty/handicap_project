@@ -108,13 +108,13 @@
       transform: scale(1.1);
     }
 
-    img {
-      width: 150px;
-      margin-bottom: 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
+	img {
+	  width: 450px;
+	  margin-bottom: 20px;
+	  margin-top: -100px;         
+	  z-index: 1;
+	}
+
 
     h1, p, a.button {
       z-index: 1;
@@ -128,14 +128,16 @@
       max-width: 900px;
     }
 
-    p {
-      font-size: 1.3em;
-      color: #5c5c8a;
-      text-align: center;
-      margin-bottom: 40px;
-      max-width: 800px;
-      line-height: 1.6;
-    }
+	p {
+	  font-size: 1.3em;
+	  color: #5c5c8a;
+	  text-align: center;
+	  margin-top: -50px;
+	  margin-bottom: 50px;
+	  max-width: 800px;
+	  line-height: 1.6;
+	}
+
 
     a.button {
       padding: 14px 30px;
@@ -195,13 +197,16 @@
     <a href="connexion.html" class="top-button"><i class="fas fa-user"></i> Se connecter</a>
   </div>
 
-  <img src="logo.png" alt="Illustration handicap" />
-  <h1>Le Coins des Aidants</h1>
+  <img src="logo.png" alt="logo" />
+  <!-- <h1>Le Coin des Aidants</h1> -->
   <p>
-    Ce site s’adresse principalement aux aidants. Souvent dans l’ombre, leur rôle est essentiel dans l’accompagnement des personnes atteintes de handicaps. 
+    Ce site s’adresse aux aidants. Souvent dans l’ombre, leur rôle est essentiel dans l’accompagnement des personnes atteintes de handicaps. 
 	Le Coin des Aidants vous propose des astuces utiles et solidaires.
   </p>
-  <a href="page_forum.html" class="button">Accéder aux astuces</a>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+  <a href="typehandicap.html" class="button">Accéder aux astuces</a>
+  <a href="parkinson.html" class="button" style="background-color: #7e57c2;">Parkinson, c'est quoi ?</a>
+</div>
 
 </body>
 </html>
