@@ -175,6 +175,39 @@ header h1 {
   outline: none;
   min-width: 220px;
 }
+.post-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.edit-button, .delete-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.edit-button {
+  background-color: #c4a6f5;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #a477e0;
+}
+
+.delete-button {
+  background-color: #f67280;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #d94c5c;
+}
+
 
   </style>
 </head>
@@ -183,24 +216,7 @@ header h1 {
   <header>
   <div class="header-content">
     <h1>Astuces d’aidants — Maladie de Parkinson</h1>
-    <div style="display:flex;align-items:center;gap:24px;">
-      <input type="search" id="search" placeholder="Rechercher une astuce…" style="margin-right:40px;" />
-      <div id="account-bar-forum" style="position:relative;display:flex;align-items:center;gap:10px;">
-        <a href="#" id="account-link-forum" style="background:#fff2;color:#fff;border-radius:6px;padding:4px 12px;text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;transition:background 0.2s, color 0.2s;">
-          <i class="fas fa-user-circle"></i> <span id="account-name-forum">Compte</span>
-        </a>
-        <div id="account-panel-forum" style="display:none;position:absolute;top:38px;right:0;min-width:220px;background:#fff;color:#333;border-radius:10px;box-shadow:0 4px 16px #0002;padding:18px 20px;z-index:1001;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <i class="fas fa-user-circle" style="font-size:2em;color:#8e44ad;"></i>
-            <div>
-              <div id="account-panel-username" style="font-weight:600;font-size:1.1em;">Utilisateur</div>
-            </div>
-          </div>
-          <div style="font-size:0.98em;margin-bottom:10px;">Bienvenue sur Handi web !<br>Vous pouvez poster et consulter des astuces.</div>
-          <button id="logout-forum" style="background:linear-gradient(90deg,#e57373 60%,#c0392b 100%);color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:0.95em;font-weight:500;cursor:pointer;transition:background 0.2s,box-shadow 0.2s;box-shadow:0 2px 8px #c0392b22;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-        </div>
-      </div>
-    </div>
+    <input type="search" id="search" placeholder="Rechercher une astuce…" />
   </div>
 </header>
 
@@ -211,11 +227,15 @@ header h1 {
       <div class="user">
         <img src="https://i.pravatar.cc/80?img=12" class="avatar" alt="Avatar de Marie">
         <span class="pseudo">Marie</span>
+  <div class="post-actions">
+    <button class="edit-button">✏️ Modifier</button>
+    <button class="delete-button">🗑️ Supprimer</button>
+  </div>
+</div>
+
       </div>
 
-      <h3 style="position:relative;">Faciliter l’habillage <span class="badge">Certifiée par un médecin</span>
-        <img src="certif.png" alt="Certifié" style="position:absolute;top:-18px;right:142px;height:40px;width:auto;vertical-align:top;box-shadow:none;background:none;border:none;">
-      </h3>
+      <h3>Faciliter l’habillage <span class="badge">Certifiée par un médecin</span></h3>
 
       <p class="content">Les vêtements à fermetures aimantées réduisent le temps et l’effort nécessaires pour s’habiller, tout en préservant l’autonomie ; j’ai également remarqué que les chemises aimantées se lavent très bien en machine sans perdre leur pouvoir d’adhérence, ce qui simplifie l’entretien à long terme pour les aidants.</p>
 
@@ -235,6 +255,12 @@ header h1 {
       <div class="user">
         <img src="https://i.pravatar.cc/80?img=32" class="avatar" alt="Avatar de Lucas">
         <span class="pseudo">Lucas</span>
+  <div class="post-actions">
+    <button class="edit-button">✏️ Modifier</button>
+    <button class="delete-button">🗑️ Supprimer</button>
+  </div>
+</div>
+
       </div>
 
       <h3>Stabiliser le tremblement lors des repas</h3>
@@ -258,6 +284,12 @@ header h1 {
       <div class="user">
         <img src="https://i.pravatar.cc/80?img=45" class="avatar" alt="Avatar de Sophie">
         <span class="pseudo">Sophie</span>
+  <div class="post-actions">
+    <button class="edit-button">✏️ Modifier</button>
+    <button class="delete-button">🗑️ Supprimer</button>
+  </div>
+</div>
+
       </div>
 
       <h3>Appli de rappels de médication</h3>
@@ -275,38 +307,6 @@ header h1 {
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('posts');
-
-      // ----------- Affichage dynamique des astuces du localStorage -----------
-      function getAstuces() {
-        return JSON.parse(localStorage.getItem('astuces') || '[]');
-      }
-      function renderAstuces() {
-        // Supprime les anciennes cartes dynamiques
-        container.querySelectorAll('.card[data-dynamic="1"]').forEach(e => e.remove());
-        const astuces = getAstuces();
-        astuces.forEach(astuce => {
-          const section = document.createElement('section');
-          section.className = 'card';
-          section.setAttribute('data-dynamic', '1');
-          section.setAttribute('data-validations', '0');
-          section.innerHTML = `
-            <div class="user">
-              <img src="https://i.pravatar.cc/80?u=${encodeURIComponent(astuce.user)}" class="avatar" alt="Avatar de ${astuce.user}">
-              <span class="pseudo">${astuce.user}</span>
-            </div>
-            <h3>Astuce partagée</h3>
-            <p class="content">${astuce.text.replace(/</g, '&lt;')}</p>
-            ${astuce.photo ? `<figure><img src="${astuce.photo}" alt="Photo de l'astuce"></figure>` : ''}
-            <div class="actions">
-              <button class="btn-validate">Astuce testée et validée <span class="count">0</span></button>
-              <button class="btn-report">Signaler</button>
-            </div>
-            <button class="btn-more">Plus</button>
-          `;
-          container.appendChild(section);
-        });
-      }
-      renderAstuces();
 
       /* ----------- Limiteur de texte & bouton “Plus” ----------- */
       container.querySelectorAll('.card').forEach(card => {
@@ -354,43 +354,24 @@ document.getElementById('search').addEventListener('input', e => {
   });
 });
 
-    // Affichage du nom utilisateur dans le bouton Compte si connecté
-    document.addEventListener('DOMContentLoaded', function() {
-      var user = localStorage.getItem('user');
-      if(user) {
-        document.getElementById('account-name-forum').textContent = user;
-        document.getElementById('account-panel-username').textContent = user;
-        document.getElementById('logout-forum').innerHTML = '<i class="fas fa-sign-out-alt"></i> Déconnexion';
-        document.getElementById('logout-forum').onclick = function() {
-          localStorage.removeItem('user');
-          location.reload();
-        };
-      } else {
-        document.getElementById('account-name-forum').textContent = 'Compte';
-        document.getElementById('account-panel-username').textContent = 'Non connecté';
-        document.getElementById('logout-forum').innerHTML = '<i class="fas fa-sign-in-alt"></i> Se connecter';
-        document.getElementById('logout-forum').style.background = 'linear-gradient(90deg,#3498db 60%,#1976d2 100%)';
-        document.getElementById('logout-forum').style.color = '#fff';
-        document.getElementById('logout-forum').onclick = function() {
-          window.location.href = 'connexion.html';
-        };
+  document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', () => {
+      if (confirm("Êtes-vous sûr de vouloir supprimer cette astuce ?")) {
+        // ici tu peux supprimer la carte ou appeler un back-end
+        button.closest('.card').remove();
       }
-      // Panneau compte toggle
-      const accountBtn = document.getElementById('account-link-forum');
-      const panel = document.getElementById('account-panel-forum');
-      accountBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
-      });
-      // Fermer le panneau si clic en dehors
-      document.addEventListener('mousedown', function(e) {
-        if (!panel.contains(e.target) && !accountBtn.contains(e.target)) {
-          panel.style.display = 'none';
-        }
-      });
     });
+  });
+
+  document.querySelectorAll('.edit-button').forEach(button => {
+    button.addEventListener('click', () => {
+      alert("Fonction 'Modifier' à implémenter.");
+      // tu peux ici ouvrir un formulaire ou une modal
+    });
+
+
   </script>
-  <button class="btn-post" onclick="window.location.href='index.html'">＋ Poster une astuce</button>
+  <button class="btn-post">＋ Poster une astuce</button>
 
 </body>
 </html>
