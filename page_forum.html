@@ -183,12 +183,24 @@ header h1 {
   <header>
   <div class="header-content">
     <h1>Astuces d’aidants — Maladie de Parkinson</h1>
-    <input type="search" id="search" placeholder="Rechercher une astuce…" />
-    <div id="account-bar-forum" style="position:absolute;top:1.2rem;right:2.5rem;display:flex;align-items:center;gap:10px;">
+    <div style="display:flex;align-items:center;gap:24px;">
+      <input type="search" id="search" placeholder="Rechercher une astuce…" style="margin-right:40px;" />
+      <div id="account-bar-forum" style="position:relative;display:flex;align-items:center;gap:10px;">
         <a href="#" id="account-link-forum" style="background:#fff2;color:#fff;border-radius:6px;padding:4px 12px;text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;transition:background 0.2s, color 0.2s;">
           <i class="fas fa-user-circle"></i> <span id="account-name-forum">Compte</span>
         </a>
+        <div id="account-panel-forum" style="display:none;position:absolute;top:38px;right:0;min-width:220px;background:#fff;color:#333;border-radius:10px;box-shadow:0 4px 16px #0002;padding:18px 20px;z-index:1001;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <i class="fas fa-user-circle" style="font-size:2em;color:#8e44ad;"></i>
+            <div>
+              <div id="account-panel-username" style="font-weight:600;font-size:1.1em;">Utilisateur</div>
+            </div>
+          </div>
+          <div style="font-size:0.98em;margin-bottom:10px;">Bienvenue sur Handi web !<br>Vous pouvez poster et consulter des astuces.</div>
+          <button id="logout-forum" style="background:linear-gradient(90deg,#e57373 60%,#c0392b 100%);color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:0.95em;font-weight:500;cursor:pointer;transition:background 0.2s,box-shadow 0.2s;box-shadow:0 2px 8px #c0392b22;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+        </div>
       </div>
+    </div>
   </div>
 </header>
 
@@ -347,7 +359,35 @@ document.getElementById('search').addEventListener('input', e => {
       var user = localStorage.getItem('user');
       if(user) {
         document.getElementById('account-name-forum').textContent = user;
+        document.getElementById('account-panel-username').textContent = user;
+        document.getElementById('logout-forum').innerHTML = '<i class="fas fa-sign-out-alt"></i> Déconnexion';
+        document.getElementById('logout-forum').onclick = function() {
+          localStorage.removeItem('user');
+          location.reload();
+        };
+      } else {
+        document.getElementById('account-name-forum').textContent = 'Compte';
+        document.getElementById('account-panel-username').textContent = 'Non connecté';
+        document.getElementById('logout-forum').innerHTML = '<i class="fas fa-sign-in-alt"></i> Se connecter';
+        document.getElementById('logout-forum').style.background = 'linear-gradient(90deg,#3498db 60%,#1976d2 100%)';
+        document.getElementById('logout-forum').style.color = '#fff';
+        document.getElementById('logout-forum').onclick = function() {
+          window.location.href = 'connexion.html';
+        };
       }
+      // Panneau compte toggle
+      const accountBtn = document.getElementById('account-link-forum');
+      const panel = document.getElementById('account-panel-forum');
+      accountBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+      });
+      // Fermer le panneau si clic en dehors
+      document.addEventListener('mousedown', function(e) {
+        if (!panel.contains(e.target) && !accountBtn.contains(e.target)) {
+          panel.style.display = 'none';
+        }
+      });
     });
   </script>
   <button class="btn-post" onclick="window.location.href='index.html'">＋ Poster une astuce</button>
