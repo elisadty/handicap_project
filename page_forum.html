@@ -181,11 +181,16 @@ header h1 {
 
 <body>
   <header>
-  <div class="header-content">
-    <h1>Astuces d’aidants — Maladie de Parkinson</h1>
-    <input type="search" id="search" placeholder="Rechercher une astuce…" />
-  </div>
-</header>
+    <div class="header-content" style="position:relative;">
+      <h1>Astuces d’aidants — Maladie de Parkinson</h1>
+      <div style="display:flex;align-items:center;gap:16px;justify-content:center;">
+        <input type="search" id="search" placeholder="Rechercher une astuce…" />
+        <a href="#" id="account-link-forum" style="background:#fff2;color:#fff;border-radius:6px;padding:4px 12px;text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;transition:background 0.2s, color 0.2s;">
+          <i class="fas fa-user-circle"></i> <span id="account-name-forum">Compte</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
 
   <main id="posts">
@@ -335,6 +340,13 @@ document.getElementById('search').addEventListener('input', e => {
   });
 });
 
+    // Affichage du nom utilisateur dans le bouton Compte si connecté
+    document.addEventListener('DOMContentLoaded', function() {
+      var user = localStorage.getItem('user');
+      if(user) {
+        document.getElementById('account-name-forum').textContent = user;
+      }
+    });
   </script>
   <button class="btn-post" onclick="window.location.href='index.html'">＋ Poster une astuce</button>
 
