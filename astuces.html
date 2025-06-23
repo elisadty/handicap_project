@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toutes les astuces</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        .container { max-width: 700px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px #0001; }
+        h1 { text-align: center; }
+        .astuce { border-bottom: 1px solid #eee; padding: 16px 0; }
+        .astuce img { max-width: 120px; max-height: 120px; display: block; margin-top: 8px; }
+        .user { font-weight: bold; color: #2a7ae2; }
+        .back { display: inline-block; margin-bottom: 20px; color: #2a7ae2; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">&larr; Retour à la publication</a>
+        <h1>Toutes les astuces</h1>
+        <div id="astuces-list"></div>
+    </div>
+    <script>
+        function getAstuces() {
+            return JSON.parse(localStorage.getItem('astuces') || '[]');
+        }
+        function renderAstuces() {
+            const astuces = getAstuces();
+            const list = document.getElementById('astuces-list');
+            if (astuces.length === 0) {
+                list.innerHTML = '<p>Aucune astuce postée pour le moment.</p>';
+                return;
+            }
+            list.innerHTML = '';
+            astuces.forEach(a => {
+                const div = document.createElement('div');
+                div.className = 'astuce';
+                div.innerHTML = `<span class="user">${a.user}</span> : ${a.text}`;
+                if (a.photo) {
+                    const img = document.createElement('img');
+                    img.src = a.photo;
+                    div.appendChild(img);
+                }
+                list.appendChild(div);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', renderAstuces);
+    </script>
+</body>
+</html>

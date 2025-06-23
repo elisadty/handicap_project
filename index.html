@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster une astuce</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px #0001; }
+        h1 { text-align: center; }
+        .hidden { display: none; }
+        .astuce { border-bottom: 1px solid #eee; padding: 12px 0; }
+        .astuce img { max-width: 100px; max-height: 100px; display: block; margin-top: 8px; }
+        .user { font-weight: bold; color: #2a7ae2; }
+        .logout { float: right; color: #e22; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Poster une astuce</h1>
+        <div id="user-info" class="hidden">
+            Connecté en tant que <span id="username"></span>
+            <span class="logout" onclick="logout()">(Déconnexion)</span>
+        </div>
+        <form id="login-form">
+            <label>Nom d'utilisateur :</label>
+            <input type="text" id="login-username" required>
+            <button type="submit">Se connecter</button>
+        </form>
+        <form id="post-form" class="hidden">
+            <label>Votre astuce :</label><br>
+            <textarea id="astuce-text" rows="3" required></textarea><br>
+            <label>Photo (optionnel) :</label>
+            <input type="file" id="astuce-photo" accept="image/*"><br><br>
+            <button type="submit">Poster</button>
+        </form>
+        <h2>Astuces postées</h2>
+        <div id="astuces-list"></div>
+    </div>
+    <script>
+        // Gestion de la connexion
+        function getUser() {
+            return localStorage.getItem('user');
+        }
+        function setUser(name) {
+            localStorage.setItem('user', name);
+        }
+        function logout() {
+            localStorage.removeItem('user');
+            location.reload();
+        }
+        function showLogin() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('post-form').classList.add('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+        }
+        function showPostForm(user) {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('post-form').classList.remove('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('username').textContent = user;
+        }
+        // Gestion des astuces
+        function getAstuces() {
+            return JSON.parse(localStorage.getItem('astuces') || '[]');
+        }
+        function saveAstuce(astuce) {
+            const astuces = getAstuces();
+            astuces.unshift(astuce);
+            localStorage.setItem('astuces', JSON.stringify(astuces));
+        }
+        function renderAstuces() {
+            const astuces = getAstuces();
+            const list = document.getElementById('astuces-list');
+            list.innerHTML = '';
+            astuces.forEach(a => {
+                const div = document.createElement('div');
+                div.className = 'astuce';
+                div.innerHTML = `<span class="user">${a.user}</span> : ${a.text}`;
+                if (a.photo) {
+                    const img = document.createElement('img');
+                    img.src = a.photo;
+                    div.appendChild(img);
+                }
+                list.appendChild(div);
+            });
+        }
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getUser();
+            if (user) {
+                showPostForm(user);
+            } else {
+                showLogin();
+            }
+            renderAstuces();
+        });
+        // Formulaire de connexion
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value.trim();
+            if (username) {
+                setUser(username);
+                showPostForm(username);
+            }
+        });
+        // Formulaire de post
+        document.getElementById('post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const text = document.getElementById('astuce-text').value.trim();
+            const user = getUser();
+            const fileInput = document.getElementById('astuce-photo');
+            if (!text) return;
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    saveAstuce({ user, text, photo: evt.target.result });
+                    renderAstuces();
+                    document.getElementById('astuce-text').value = '';
+                    fileInput.value = '';
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveAstuce({ user, text, photo: null });
+                renderAstuces();
+                document.getElementById('astuce-text').value = '';
+            }
+        });
+    </script>
+</body>
+</html>
