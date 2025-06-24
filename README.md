@@ -20,6 +20,4 @@ Ce projet vise à créer un site internet communautaire dédié aux aidants et a
 - Barre de recherche intelligente : permet de filtrer les contenus par mot-clé ou symptôme.
 - Espace forum : pour poser des questions, partager son vécu, ou réagir à l’actualité ou des événements.
 - Espace aidants : incluant des conseils pour leur santé mentale, une hotline d'écoute (payante pour autofinancement).
-- Agenda : événements liés à Parkinson, comme la journée mondiale (11 avril), et propositions d’ateliers ou de rencontres.
-- Modération et sécurité : RGPD respecté, modération des contenus, validation des comptes médecins par administrateur.
 - Ergonomie pensée pour les seniors : interface simple, textes lisibles, navigation intuitive.
